@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public class ComputationController {
 			private final AtomicLong counter = new AtomicLong();
 			private Calculator c = new Calculator();
-			private final String endpoint = "http://client:3000";
+			private final String endpoint = "http://1b9df289.ngrok.io";
 			
 			@CrossOrigin(origins = endpoint)
 			@RequestMapping("/calc")
