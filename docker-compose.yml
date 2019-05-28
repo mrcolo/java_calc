@@ -1,0 +1,41 @@
+# A docker-compose must always start by the version tag.
+# We use "3" because it's the last version at this time.
+version: "3"
+
+services:
+
+  # First service (container): the server.
+  # Here you are free to choose the keyword.
+  # It will allow you to define what the service corresponds to.
+  # We use the keyword 'server' for the server.
+  server:
+    expose:
+      - 8080
+    # The keyword "build" will allow you to define
+    # the path to the Dockerfile to use to create the image
+    # that will allow you to execute the service.
+    # Here 'server/' corresponds to the path to the server folder
+    # that contains the Dockerfile to use.
+    build: server/
+
+    # The command to execute once the image is created.
+    ports:
+      - 8080:8080
+
+  # Second service (container): the client.
+  # We use the keyword 'client' for the server.
+  client:
+    # Here 'client/ corresponds to the path to the client folder
+    # that contains the Dockerfile to use.
+    build: client/
+    depends_on:
+      - server
+    # The command to execute once the image is created.
+    # The following command will execute "python ./client.py".
+    command: serve -p 3000 -s .
+    # The keyword 'network_mode' is used to define the network type.
+    # Here we define that the container can access to the 'localhost' of the computer.
+    ports:
+      - 3000:3000
+    links:
+      - server
